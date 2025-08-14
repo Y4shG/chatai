@@ -3,20 +3,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <!-- Page Title -->
     <title>ShantiGPT</title>
-
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="icon.png">
-
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
 
-    <!-- Theme color (will be overridden by JS for dark mode) -->
     <meta name="theme-color" content="#ffffff">
 
     <style>
-        /* Default: light mode */
         html, body {
             width: 100%;
             height: 100%;
@@ -24,20 +17,16 @@
             margin: 0;
             overflow: hidden;
             font-family: Arial, sans-serif;
-            font-size: 10px;
-            color: #6e6e6e;
             background-color: #fff;
         }
         #preview-frame {
             width: 100%;
+            height: 100%;
+            border: none;
             background-color: #fff;
-            height: 902px; /* keep your original fixed height */
         }
-
-        /* Dark mode */
         @media (prefers-color-scheme: dark) {
             html, body {
-                color: #d0d0d0;
                 background-color: #000;
             }
             #preview-frame {
@@ -46,32 +35,35 @@
         }
     </style>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
-        // Adjust iframe height to window height
-        var calcHeight = function() {
-            $('#preview-frame').height($(window).height());
-        };
-        $(document).ready(calcHeight);
-        $(window).resize(calcHeight).load(calcHeight);
-
-        // Dynamically update theme-color meta for dark mode
+        // Update theme color dynamically for mobile browsers
         const metaTheme = document.querySelector('meta[name="theme-color"]');
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            metaTheme.setAttribute('content', '#000000');
+        function updateThemeColor() {
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                metaTheme.setAttribute('content', '#000000');
+            } else {
+                metaTheme.setAttribute('content', '#ffffff');
+            }
         }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateThemeColor);
+        updateThemeColor();
     </script>
 </head>
 <body>
-    <iframe id="preview-frame" src="https://vovxb-yash.hf.space/" name="preview-frame" frameborder="0" noresize="noresize" style="height:902px;"></iframe>
+    <iframe
+        id="preview-frame"
+        src="https://vovxb-yash.hf.space/"
+        allow="microphone; camera; clipboard-read; clipboard-write; fullscreen; autoplay"
+        allowfullscreen
+    ></iframe>
 
-    <!-- Register Service Worker -->
     <script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-            .then(reg => console.log('Service Worker registered', reg))
-            .catch(err => console.error('Service Worker registration failed', err));
-    }
+        // Register service worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(reg => console.log('Service Worker registered', reg))
+                .catch(err => console.error('Service Worker registration failed', err));
+        }
     </script>
 </body>
 </html>
