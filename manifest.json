@@ -1,0 +1,16 @@
+{
+  "name": "ShantiGPT",
+  "short_name": "ShantiGPT",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "description": "AI Chatbot",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
